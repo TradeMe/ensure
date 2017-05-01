@@ -1,0 +1,9 @@
+compiled/
+src/
+node_modules/
+reports/
+
+.DS_Store
+.istanbulrc.json
+.mocharc
+tsconfig.json

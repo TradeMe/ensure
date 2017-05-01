@@ -1,0 +1,6 @@
+compiled/
+dist/
+node_modules/
+reports/
+
+.DS_Store
