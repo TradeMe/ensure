@@ -1,3 +1,5 @@
+export * from './ensure-error';
+
 export * from './singleton/singleton';
 
 export * from './value/value';
