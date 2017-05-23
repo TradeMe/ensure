@@ -4,8 +4,6 @@ import { Injectable } from '@angular/core';
 
 export function Singleton (): (injectable: any) => any {
     return function (injectable: any): any {
-        checkInjectable(injectable);
-
         let singleton = createSingleton(injectable);
         setPrototype(injectable, singleton);
         setMetadata(injectable, singleton);
@@ -17,7 +15,7 @@ export function Singleton (): (injectable: any) => any {
 
 // @Singleton must appear before the @Injectable decorator on the class.
 // This is so the service injection is applied to the original class.
-function checkInjectable (injectable) {
+function checkInjectable (injectable): void {
     let annotations = Reflect.getOwnMetadata('annotations', injectable);
     let isInjectable = annotations && annotations.some(ann => ann.constructor === Injectable);
     if (!isInjectable) {
@@ -31,11 +29,13 @@ function checkInjectable (injectable) {
     }
 }
 
-function createSingleton (injectable) {
+function createSingleton (injectable): Function {
     let instantiated: boolean = null;
     return function singleton () {
         if (!instantiated) {
+            checkInjectable(injectable);
             instantiated = true;
+            this._reset = () => instantiated = false;
             return injectable.apply(this, arguments);
         }
         throw new EnsureError(`

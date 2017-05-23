@@ -1,12 +1,12 @@
 {
   "name": "@trademe/ensure",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "description": "Utility decorators for Angular applications",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "npm run clean && npm run compile",
+    "build": "npm run clean && npm run compile && npm run cover",
     "clean": "rimraf ./compiled && rimraf ./dist",
     "compile": "ngc -p ./tsconfig.json && tsc -p ./tsconfig.json",
     "cover": "ts-node node_modules/istanbul/lib/cli.js cover --config .istanbulrc.json _mocha -- --opts ./.mocharc \"src/**/*.spec.ts\"",

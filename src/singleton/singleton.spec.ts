@@ -39,6 +39,7 @@ describe('@Singleton', () => {
             @Singleton()
             class Service { }
 
+            let service = new Service();
         }).to.throw(new EnsureError(`
             @Singleton must appear before @Injectable:
 
@@ -68,5 +69,19 @@ describe('@Singleton', () => {
         let singleton = new Service();
 
         expect(singleton.test).to.be.an.instanceOf(Function);
+    });
+
+    it('should be able to be reset', () => {
+        @Singleton()
+        @Injectable()
+        class Service { }
+
+        let singleton = new Service();
+
+        (<any>singleton)._reset();
+
+        expect(() => {
+            let singleton = new Service();
+        }).not.to.throw();
     });
 });
