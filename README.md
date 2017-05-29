@@ -11,8 +11,8 @@
 ```javascript
 import { Singleton } from '@trademe/ensure';
 
-@Singleton
-@Injectable
+@Singleton()
+@Injectable()
 export class MyStatefulService { }
 
 let instance = new MyStatefulService(); // works:
