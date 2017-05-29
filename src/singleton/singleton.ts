@@ -13,27 +13,10 @@ export function Singleton (): (injectable: any) => any {
     };
 }
 
-// @Singleton must appear before the @Injectable decorator on the class.
-// This is so the service injection is applied to the original class.
-function checkInjectable (injectable): void {
-    let annotations = Reflect.getOwnMetadata('annotations', injectable);
-    let isInjectable = annotations && annotations.some(ann => ann.constructor === Injectable);
-    if (!isInjectable) {
-        throw new EnsureError(`
-            @Singleton must appear before @Injectable:
-
-                @Singleton()
-                @Injectable()
-                export class ${injectable.name} { }
-        `);
-    }
-}
-
 function createSingleton (injectable): Function {
     let instantiated: boolean = null;
     return function singleton () {
         if (!instantiated) {
-            checkInjectable(injectable);
             instantiated = true;
             this._reset = () => instantiated = false;
             return injectable.apply(this, arguments);
