@@ -9,7 +9,7 @@
     "build": "npm run clean && npm run compile && npm run cover",
     "clean": "rimraf ./compiled && rimraf ./dist",
     "compile": "ngc -p ./tsconfig.json && tsc -p ./tsconfig.json",
-    "cover": "ts-node node_modules/istanbul/lib/cli.js cover --config .istanbulrc.json _mocha -- --opts ./.mocharc \"src/**/*.spec.ts\"",
+    "cover": "ts-node node_modules/istanbul/lib/cli.js cover --config .istanbulrc.json node_modules/mocha/bin/_mocha -- --opts ./.mocharc \"src/**/*.spec.ts\"",
     "test": "mocha --opts ./.mocharc \"src/**/*.spec.ts\""
   },
   "author": "Craig Spence <craig@trademe.co.nz>",

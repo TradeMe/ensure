@@ -33,22 +33,6 @@ describe('@Singleton', () => {
         expect(Service.prototype.toString()).to.equal('ServiceSingleton');
     });
 
-    it('should not decorate service if singleton is added after injectable', () => {
-        expect(() => {
-            @Injectable()
-            @Singleton()
-            class Service { }
-
-            let service = new Service();
-        }).to.throw(new EnsureError(`
-            @Singleton must appear before @Injectable:
-
-                @Singleton()
-                @Injectable()
-                export class Service { }
-        `).message);
-    });
-
     it('should still create an instance of the service', () => {
         @Singleton()
         @Injectable()
