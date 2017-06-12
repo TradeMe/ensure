@@ -1,6 +1,7 @@
 // Dependencies:
-import { EnsureError } from '../ensure-error';
 import { Injectable } from '@angular/core';
+import { EnsureError } from '../ensure-error';
+import { ResettableSingleton } from './resettable-singleton';
 
 export function Singleton (): (injectable: any) => any {
     return function (injectable: any): any {
@@ -13,18 +14,19 @@ export function Singleton (): (injectable: any) => any {
     };
 }
 
-function createSingleton (injectable): Function {
+function createSingleton (injectable: any): ResettableSingleton {
     let instantiated: boolean = null;
-    return function singleton () {
+    function singleton () {
         if (!instantiated) {
             instantiated = true;
-            this._reset = () => instantiated = false;
             return injectable.apply(this, arguments);
         }
         throw new EnsureError(`
             ${injectable.name} is a singleton and must not be instantiated multiple times.
         `);
-    }
+    };
+    (<ResettableSingleton>singleton)._reset = () => instantiated = false;
+    return singleton;
 }
 
 function setMetadata (injectable, singleton): void {

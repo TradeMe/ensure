@@ -1,10 +1,12 @@
 // Utilities:
+import 'mocha';
 import { expect } from 'chai';
 
 // Dependencies:
 import 'reflect-metadata';
 import { Injectable } from '@angular/core';
 import { EnsureError } from '../ensure-error';
+import { ResettableSingleton } from './resettable-singleton';
 
 // Under test:
 import { Singleton } from './singleton';
@@ -62,7 +64,7 @@ describe('@Singleton', () => {
 
         let singleton = new Service();
 
-        (<any>singleton)._reset();
+        (<ResettableSingleton>Service)._reset();
 
         expect(() => {
             let singleton = new Service();

@@ -4,3 +4,4 @@ node_modules/
 reports/
 
 .DS_Store
+.npm-debug.log
