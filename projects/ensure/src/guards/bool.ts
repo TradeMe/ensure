@@ -1,7 +1,8 @@
 // Dependencies:
-import { EnsureError } from '../../ensure-error';
+import { EnsureError } from '../ensure-error';
+import { ensure } from '../guard/guard';
 
-export function isBool (value: any, key: string): boolean {
+export const isBool = ensure((value: any, key: string): boolean => {
     if (value === true || value === false) {
         return value;
     }
@@ -17,4 +18,4 @@ export function isBool (value: any, key: string): boolean {
             The following values will evaluate to true: true, "true", "".
             The following values will evaluate to false: false, "false".
     `);
-}
+});

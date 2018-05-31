@@ -1,50 +1,53 @@
 // Utilities:
-import { expect } from 'chai';
-import * as sinon from 'sinon';
+import { expect } from '../../test';
 
 // Dependencies:
-import * as notNull from './getter/not-null';
-import * as bool from './setter/bool';
+import { isBool } from '../guards/bool';
+import { isNotNull } from '../guards/not-null';
 
 // Under test:
 import { Value } from './value';
 
 describe('@Value', () => {
     it('should check is a value passes a test on a getter', () => {
-        let isNotNull = sinon.spy(notNull, 'isNotNull');
-
         class Class {
-            @Value(notNull.isNotNull) property: string;
+            @Value(isNotNull) property: string;
         }
 
-        let instance = new Class();
+        const instance = new Class();
 
-        instance.property = 'value';
+        expect(() => {
+            return instance.property;
+        }).to.throw(`'property' must not be "null" or "undefined".`);
 
-        expect(instance.property).to.equal('value');
-        expect(isNotNull.called).to.equal(true);
+        expect(() => {
+            instance.property = 'value';
+            return instance.property;
+        }).to.not.throw();
     });
 
     it('should check is a value passes a test on a setter', () => {
-        let isBool = sinon.spy(bool, 'isBool');
-
         class Class {
-            @Value(bool.isBool) property: string;
+            @Value(isBool) property: string;
         }
 
-        let instance = new Class();
+        const instance = new Class();
 
-        instance.property = 'true';
+        expect(() => {
+            return instance.property;
+        }).to.not.throw();
 
-        expect(isBool.called).to.equal(true);
+        expect(() => {
+            instance.property = '6';
+        }).to.throw(`"6" is not a valid value for 'property'`);
     });
 
     it('should turn a "null" string value to `null`', () => {
         class Class {
-            @Value(bool.isBool) property: string;
+            @Value(isBool) property: string;
         }
 
-        let instance = new Class();
+        const instance = new Class();
 
         instance.property = 'null';
 
@@ -53,10 +56,10 @@ describe('@Value', () => {
 
     it('should ignore a `null` value', () => {
         class Class {
-            @Value(bool.isBool) property: string;
+            @Value(isBool) property: string;
         }
 
-        let instance = new Class();
+        const instance = new Class();
 
         instance.property = null;
 
@@ -65,10 +68,10 @@ describe('@Value', () => {
 
     it('should ignore a `undefined` value', () => {
         class Class {
-            @Value(bool.isBool) property: string;
+            @Value(isBool) property: string;
         }
 
-        let instance = new Class();
+        const instance = new Class();
 
         instance.property = undefined;
 
@@ -80,7 +83,7 @@ describe('@Value', () => {
             @Value([]) property: string;
         }
 
-        let instance = new Class();
+        const instance = new Class();
 
         instance.property = 'value';
 

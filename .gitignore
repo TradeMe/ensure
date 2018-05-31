@@ -1,7 +1,7 @@
-compiled/
-dist/
-node_modules/
-reports/
-
+/dist
+/node_modules
+/reports
+npm-debug.log
+yarn-error.log
 .DS_Store
-.npm-debug.log
+Thumbs.db

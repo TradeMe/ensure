@@ -1,19 +1,20 @@
+// Dependencies:
+import { isNotNull } from '../guards/not-null';
+import { Guard } from '../guard/guard';
+
 // Constants:
 const VALUE_KEY = '__value_';
 
-// Dependencies:
-import { isNotNull } from './getter/not-null';
+export function Value (caster: Guard<any> | Array<Guard<any>>): PropertyDecorator {
+    const casters = Array.isArray(caster) ? caster : [caster];
 
-export function Value (caster: Function | Array<Function>): PropertyDecorator {
-    let casters = Array.isArray(caster) ? caster : [caster];
-
-    let getters = casters.filter(caster => caster === isNotNull);
-    let setters = casters.filter(caster => caster !== isNotNull);
+    const getters = casters.filter(c => c.isGetter);
+    const setters = casters.filter(c => !c.isGetter);
 
     return (target: any, propertyKey: string) => {
         Object.defineProperty(target, propertyKey, {
             get: function () {
-                let value = Reflect.getMetadata(`${VALUE_KEY}${propertyKey}`, this);
+                const value = (Reflect as any).getMetadata(`${VALUE_KEY}${propertyKey}`, this);
                 getters.forEach(getter => {
                     getter.call(this, value, propertyKey);
                 });
@@ -31,7 +32,7 @@ export function Value (caster: Function | Array<Function>): PropertyDecorator {
                         castValue = setter.call(this, castValue, propertyKey);
                     });
                 }
-                Reflect.defineMetadata(`${VALUE_KEY}${propertyKey}`, castValue, this);
+                (Reflect as any).defineMetadata(`${VALUE_KEY}${propertyKey}`, castValue, this);
             }
         });
     };

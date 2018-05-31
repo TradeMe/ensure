@@ -2,31 +2,13 @@
 
 [![npm version](https://img.shields.io/npm/v/@trademe/ensure.svg)](https://www.npmjs.com/package/@trademe/ensure)
 
-## `@Singleton`:
-
-> This decorator can be applied to `@Injectable` classes to ensure that they are instantiated only once. This is useful for stateful services that belong at the root of the application.
-
-### Example:
-
-```javascript
-import { Singleton } from '@trademe/ensure';
-
-@Singleton()
-@Injectable()
-export class MyStatefulService { }
-
-let instance = new MyStatefulService(); // works:
-let another = new MyStatefulService(); // throws!
-```
-___
-
 ## `@Value`:
 
 > This decorator can be applied to properties on a class to ensure that they conform to rules when they are set. The rules also act as a mechanism for casting values from HTML attributes, which makes for nicer component APIs.
 
 ### Example:
 
-```javascript
+```typescript
 import { Value } from '@trademe/ensure';
 
 export class MyClass {
@@ -64,7 +46,7 @@ export function isLengthFive (value: string) {
 
 #### Example:
 
-```javascript
+```typescript
 import { isNotNull } from '@trademe/ensure';
 
 export class MyClass {
@@ -83,7 +65,7 @@ console.log(instance.mustNotBeNull): // throws!
 
 #### Example:
 
-```javascript
+```typescript
 import { isBool } from '@trademe/ensure';
 
 export class MyClass {
@@ -101,7 +83,7 @@ console.log(instance.mustBeBoolean) // false
 
 #### Example:
 
-```javascript
+```typescript
 import { isBool } from '@trademe/ensure';
 
 @Component({ ... })
@@ -122,7 +104,7 @@ export class MyComponent {
 
 #### Example:
 
-```javascript
+```typescript
 import { isEnum } from '@trademe/ensure';
 
 export enum MyEnum {
@@ -148,7 +130,7 @@ instance.mustBeEnum = 'baz'; // throws!
 
 #### Example:
 
-```javascript
+```typescript
 import { isNumber } from '@trademe/ensure';
 
 export class MyClass {
@@ -161,4 +143,46 @@ console.log(instance.mustBeNumber); // 5
 instance.mustBeNumber = '1.33'; // works!
 console.log(instance.mustBeNumber); // 1.33
 instance.mustBeNumber = 'baz'; // throws!
+```
+
+### Custom rules:
+
+Sometimes it is useful to write your own rules. To do that, we provide an `ensure` method, which you need to wrap your rule with:
+
+```typescript
+import { ensure, EnsureError } from '@trademe/ensure';
+
+export const isInt = ensure((value: any, key: string): number => {
+    const num = +parseInt(value, 10);
+    if (isNaN(num)) {
+        throw new EnsureError(`
+            '${key}' must be a number.
+        `);
+    }
+    if (`${num}` !== `${value}`) {
+        throw new EnsureError(`
+            '${key}' must be an integer.
+        `);
+    }
+    return num;
+});
+```
+
+If you need to do something more complicated, say with arguments, the *inner* function should be wrapped with `ensure`:
+
+```typescript
+
+import { ensure, EnsureError } from '@trademe/ensure';
+
+export function isMutuallyExclusive (mutuallyExclusiveKey: string): Function {
+    return ensure((value: any, key: string): any {
+        let mutuallyExclusiveValue = this[mutuallyExclusiveKey];
+        if (mutuallyExclusiveValue != null && mutuallyExclusiveValue !== false) {
+            throw new EnsureError(`
+               "${key}" and "${mutuallyExclusiveKey}" cannot be used at the same time.
+            `);
+        }
+        return value;
+    });
+}
 ```
