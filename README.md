@@ -4,7 +4,7 @@
 
 ## `@Value`:
 
-> This decorator can be applied to properties on a class to ensure that they conform to rules when they are set. The rules also act as a mechanism for casting values from HTML attributes, which makes for nicer component APIs.
+This decorator can be applied to properties on a class to ensure that they conform to rules when they are set. The rules also act as a mechanism for casting values from HTML attributes, which makes for nicer component APIs.
 
 ### Example:
 
@@ -38,11 +38,11 @@ export function isLengthFive (value: string) {
 }
 ```
 
-### Built in rules:
+### Built in guards:
 
 #### `isNotNull`
 
-> Ensure that a value is not `null`. `isNotNull` is special in that it acts when *getting* the value, not setting it.
+Ensure that a value is not `null`. `isNotNull` is special in that it acts when *getting* the value, not setting it.
 
 #### Example:
 
@@ -61,7 +61,7 @@ console.log(instance.mustNotBeNull): // throws!
 
 #### `isBool`
 
-> Ensure that a value is boolean. Also casts from `'true'` or `''` to `true` and `'false'` to `false`.
+Ensure that a value is boolean. Also casts from `'true'` or `''` to `true` and `'false'` to `false`.
 
 #### Example:
 
@@ -79,7 +79,7 @@ instance.mustBeBoolean = 'false'; // works
 console.log(instance.mustBeBoolean) // false
 ```
 
-> `isBool` is particularly useful for simplifying component APIs when combined with `@Input`.
+`isBool` is particularly useful for simplifying component APIs when combined with `@Input`.
 
 #### Example:
 
@@ -100,7 +100,7 @@ export class MyComponent {
 
 #### `isEnum`
 
-> Ensure that a value is a valid enum value.
+Ensure that a value is a valid enum value.
 
 #### Example:
 
@@ -126,7 +126,7 @@ instance.mustBeEnum = 'baz'; // throws!
 
 #### `isNumber`
 
-> Ensure that a value is a valid number.
+Ensure that a value is a valid number.
 
 #### Example:
 
@@ -145,9 +145,9 @@ console.log(instance.mustBeNumber); // 1.33
 instance.mustBeNumber = 'baz'; // throws!
 ```
 
-### Custom rules:
+### Custom guards:
 
-Sometimes it is useful to write your own rules. To do that, we provide an `ensure` method, which you need to wrap your rule with:
+Sometimes it is useful to write your own guards. To do that, we provide an `ensure` method, which you need to wrap your rule with:
 
 ```typescript
 import { ensure, EnsureError } from '@trademe/ensure';
