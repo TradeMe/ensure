@@ -168,7 +168,7 @@ export const isInt = ensure((value: any, key: string): number => {
 });
 ```
 
-If you need to do something more complicated, say with arguments, the *inner* function should be wrapped with `ensure`:
+If you need to do something more complicated, say with arguments, the *inner* function should be wrapped with `ensure`. You can also indicate that a guard should be run when the property is `get` rather than `set`:
 
 ```typescript
 
@@ -183,6 +183,8 @@ export function isMutuallyExclusive (mutuallyExclusiveKey: string): Function {
             `);
         }
         return value;
+    }, {
+        getter: true
     });
 }
 ```
