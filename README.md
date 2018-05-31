@@ -4,7 +4,7 @@
 
 ## `@Value`:
 
-This decorator can be applied to properties on a class to ensure that they conform to rules when they are set. The rules also act as a mechanism for casting values from HTML attributes, which makes for nicer component APIs.
+This decorator can be applied to properties on a class to ensure that they conform to guards when they are set. The guards also act as a mechanism for casting values from HTML attributes, which makes for nicer component APIs.
 
 ### Example:
 
@@ -12,8 +12,8 @@ This decorator can be applied to properties on a class to ensure that they confo
 import { Value } from '@trademe/ensure';
 
 export class MyClass {
-  @Value(isOne) mustBeOne: number;
-  @Value([isString, isLengthFive]) verySpecificString: string;
+    @Value(isOne) mustBeOne: number;
+    @Value(isString, isLengthFive) verySpecificString: string;
 }
 
 export function isOne (value: any) {

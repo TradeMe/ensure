@@ -89,4 +89,38 @@ describe('@Value', () => {
 
         expect(instance.property).to.equal('value');
     });
+
+    it('should handle an array of guards', () => {
+        class Class {
+            @Value([isNotNull, isBool]) property: string;
+        }
+
+        const instance = new Class();
+
+        expect(() => {
+            instance.property = 'null';
+            return instance.property;
+        }).to.throw(`'property' must not be "null" or "undefined"`);
+
+        instance.property = 'true';
+
+        expect(instance.property).to.equal(true);
+    });
+
+    it('should handle multiple guards', () => {
+        class Class {
+            @Value(isNotNull, isBool) property: string;
+        }
+
+        const instance = new Class();
+
+        expect(() => {
+            instance.property = 'null';
+            return instance.property;
+        }).to.throw(`'property' must not be "null" or "undefined"`);
+
+        instance.property = 'true';
+
+        expect(instance.property).to.equal(true);
+    });
 });

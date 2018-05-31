@@ -5,11 +5,11 @@ import { Guard } from '../guard/guard';
 // Constants:
 const VALUE_KEY = '__value_';
 
-export function Value (caster: Guard<any> | Array<Guard<any>>): PropertyDecorator {
-    const casters = Array.isArray(caster) ? caster : [caster];
+export function Value (...guards: Array<Guard<any> | Array<Guard<any>>>): PropertyDecorator {
+    const guardsArray = getGuardsArray(guards);
 
-    const getters = casters.filter(c => c.isGetter);
-    const setters = casters.filter(c => !c.isGetter);
+    const getters = guardsArray.filter(c => c.isGetter);
+    const setters = guardsArray.filter(c => !c.isGetter);
 
     return (target: any, propertyKey: string) => {
         Object.defineProperty(target, propertyKey, {
@@ -36,4 +36,10 @@ export function Value (caster: Guard<any> | Array<Guard<any>>): PropertyDecorato
             }
         });
     };
+}
+
+function getGuardsArray (guards: Array<Guard<any> | Array<Guard<any>>>): Array<Guard<any>> {
+    // Handle old @Value([guardOne, guardTwo]) syntax:
+    const [firstGuard] = guards;
+    return Array.isArray(firstGuard) ? firstGuard as Array<Guard<any>> : guards as Array<Guard<any>>;
 }
