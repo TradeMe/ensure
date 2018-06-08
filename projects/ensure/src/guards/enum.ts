@@ -2,10 +2,10 @@
 import { EnsureError } from '../ensure-error';
 import { ensure } from '../guard/guard';
 
-export function isEnum <T> (enumValues: T): Function {
+export function isEnum <T> (enumValues: T) {
     // This functions is explicitly *not* using the `=>` syntax so that
     // the `this` values is bound to the instance being checked.
-    return ensure<T>((value: any, key: string): T => {
+    return ensure<number | any>((value: any, key: string) => {
         const enumValue = enumValues[value];
         if (enumValue == null) {
             throw new EnsureError(`
