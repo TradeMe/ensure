@@ -11,7 +11,7 @@ export function dedent (str: string): string {
     const lines = str.split(/\n/);
     const minWhipeSpace = lines.reduce((p, n) => {
         const whitespaceCount = n.search(/\S/);
-        if (whitespaceCount <= 0) {
+        if (whitespaceCount < 0) {
             return p;
         }
         return whitespaceCount < p ? whitespaceCount : p;
