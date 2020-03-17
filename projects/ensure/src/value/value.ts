@@ -1,5 +1,4 @@
 // Dependencies:
-import { isNotNull } from '../guards/not-null';
 import { Guard } from '../guard/guard';
 
 // Constants:
@@ -14,7 +13,7 @@ export function Value (...guards: Array<Guard<any> | Array<Guard<any>>>): Proper
     return (target: any, propertyKey: string) => {
         Object.defineProperty(target, propertyKey, {
             get: function () {
-                const value = (Reflect as any).getMetadata(`${VALUE_KEY}${propertyKey}`, this);
+                const value = Reflect.getMetadata(`${VALUE_KEY}${propertyKey}`, this);
                 getters.forEach(getter => {
                     getter.call(this, value, propertyKey);
                 });
@@ -32,7 +31,7 @@ export function Value (...guards: Array<Guard<any> | Array<Guard<any>>>): Proper
                         castValue = setter.call(this, castValue, propertyKey);
                     });
                 }
-                (Reflect as any).defineMetadata(`${VALUE_KEY}${propertyKey}`, castValue, this);
+                Reflect.defineMetadata(`${VALUE_KEY}${propertyKey}`, castValue, this);
             }
         });
     };
