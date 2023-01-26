@@ -1,0 +1,6 @@
+{
+    "color": true,
+    "require": "ts-node/register",
+    "recursive": true,
+    "spec": ["projects/ensure/src/**/*.spec.ts"]
+  }
