@@ -18,7 +18,8 @@
           "configurations": {
             "production": {
               "project": "projects/ensure/ng-package.prod.json"
-            }
+            ,              "tsConfig": "projects/ensure/tsconfig.lib.prod.json"
+}
           }
         },
         "lint": {
