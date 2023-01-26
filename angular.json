@@ -21,17 +21,6 @@
             ,              "tsConfig": "projects/ensure/tsconfig.lib.prod.json"
 }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ensure/tsconfig.lib.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
