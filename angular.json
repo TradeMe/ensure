@@ -17,9 +17,18 @@
           },
           "configurations": {
             "production": {
-              "project": "projects/ensure/ng-package.prod.json"
-            ,              "tsConfig": "projects/ensure/tsconfig.lib.prod.json"
-}
+              "project": "projects/ensure/ng-package.prod.json",
+              "tsConfig": "projects/ensure/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ensure/**/*.ts",
+              "projects/ensure/**/*.html"
+            ]
           }
         }
       }
