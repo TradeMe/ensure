@@ -1,6 +1,6 @@
 {
   "name": "@trademe/ensure",
-  "version": "0.5.0",
+  "version": "1.0.1",
   "license": "MIT",
   "dependencies": {
     "tslib": "^2.0.0"
