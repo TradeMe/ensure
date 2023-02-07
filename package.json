@@ -10,7 +10,6 @@
     "test:debug": "mocha --config ./.mocharc.json --inspect-brk",
     "lint": "ng lint"
   },
-  "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.10",
     "@angular-eslint/builder": "14.4.0",
