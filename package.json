@@ -1,6 +1,6 @@
 {
   "name": "@trademe/ensure",
-  "version": "0.0.0-PLACEHOLDER",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "Utility decorators for Angular applications",
   "scripts": {
