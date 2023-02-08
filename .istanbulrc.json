@@ -1,9 +1,0 @@
-{
-  "instrumentation": {
-    "extensions": [".ts"],
-    "excludes": ["*.d.ts", "*.spec.ts"]
-  },
-  "reporting": {
-    "dir": "./reports/coverage"
-  }
-}

@@ -1,9 +1,6 @@
 // Utilities:
 import { expect } from '../../test';
 
-// Dependencies:
-import { EnsureError } from '../ensure-error';
-
 // Under test:
 import { ensure } from './guard';
 

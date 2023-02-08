@@ -10,30 +10,28 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/ensure/tsconfig.lib.json",
             "project": "projects/ensure/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "projects/ensure/ng-package.prod.json"
+              "project": "projects/ensure/ng-package.prod.json",
+              "tsConfig": "projects/ensure/tsconfig.lib.prod.json"
             }
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/ensure/tsconfig.lib.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/ensure/**/*.ts",
+              "projects/ensure/**/*.html"
             ]
           }
         }
       }
     }
-  },
-  "defaultProject": "ensure"
+  }
 }
