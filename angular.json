@@ -25,6 +25,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": ".eslintrc.json",
             "lintFilePatterns": [
               "projects/ensure/**/*.ts",
               "projects/ensure/**/*.html"
